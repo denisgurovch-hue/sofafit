@@ -1,0 +1,346 @@
+{
+  "header": {
+    "tryIt": "Try it",
+    "uploadOther": "Upload another photo",
+    "backHome": "← Home"
+  },
+  "language": {
+    "ru": "RU",
+    "en": "EN",
+    "switchTo": "Change language"
+  },
+  "landing": {
+    "meta": {
+      "title": "SofaFit — try furniture in your customer's room",
+      "description": "SofaFit puts your furniture inside your customer's room before they buy. AI drops in the sofa and styles the scene — higher conversion, fewer returns."
+    },
+    "hero": {
+      "title1": "Your product, in your customer's home.",
+      "title2": "Before they buy.",
+      "subtitle": "Buyers see the sofa in their own room. AI styles it with a rug, lamp and decor. You sell a finished interior, not just a piece of furniture.",
+      "ctaDemo": "See demo",
+      "ctaHow": "How it works",
+      "before": "Customer photo",
+      "after": "AI result",
+      "beforeAlt": "Empty room before sofa try-on",
+      "afterAlt": "Sofa in interior"
+    },
+    "how": {
+      "title": "How it works",
+      "subtitle": "Three steps from an empty room photo to a finished order",
+      "step1Title": "1. Upload a room photo",
+      "step1Text": "The buyer sends a snapshot of their room straight into the widget on your site.",
+      "step2Title": "2. AI drops in the sofa",
+      "step2Text": "The model places the chosen item from your catalog with correct scale and shadows.",
+      "step3Title": "3. Add-ons and styling",
+      "step3Text": "AI suggests a rug, lamp and decor — the customer adds them all in one click."
+    },
+    "benefits": {
+      "title": "What the store gets",
+      "subtitle": "SofaFit is a sales tool, not a toy. Plug it into your catalog in a day.",
+      "conversionTitle": "Higher conversion",
+      "conversionText": "Customers see the product in their own room and decide faster.",
+      "returnsTitle": "Fewer returns",
+      "returnsText": "Buyers feel confident about size, color and style before delivery.",
+      "aovTitle": "Larger basket",
+      "aovText": "AI sells add-ons — rugs, lamps, decor — in a single cart.",
+      "widgetTitle": "Widget for your site",
+      "widgetText": "Embed via iframe or hook into the product page."
+    },
+    "demo": {
+      "title": "Try it on your own photo",
+      "text": "Upload a room photo, pick a sofa from the demo catalog and watch AI compose the interior in 30 seconds.",
+      "cta": "Open demo",
+      "alt": "Example interior with sofa"
+    },
+    "contacts": {
+      "title": "Let's plug in your store",
+      "text": "Drop a line — we'll walk you through integration, pricing, and show results on your own catalog."
+    }
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  },
+  "index": {
+    "meta": {
+      "title": "SofaFit — try a sofa in your own room",
+      "description": "Upload a photo of your room and see how a sofa would look at home. AI generation in 30 seconds."
+    },
+    "uploadTitle": "Try a sofa in your own room",
+    "uploadSubtitle": "Upload a room photo, pick a sofa from the catalog — and see how it will look in your home",
+    "modeTitle": "How would you like to pick a sofa?",
+    "modeSubtitle": "Choose what suits you best",
+    "yourPhoto": "Your photo",
+    "openCatalog": "Browse full catalog",
+    "chooseSofa": "Pick a sofa",
+    "pickWithAI": "Get AI suggestions",
+    "tryHint": "Tap “Try on” on any sofa — we'll drop it into your room.",
+    "resultTitle": "Try-on result",
+    "roomAlt": "Room photo"
+  },
+  "uploader": {
+    "drop": "Release the photo",
+    "dragHere": "Drag your room photo here",
+    "or": "or click to choose a file (JPG, PNG)",
+    "selectFile": "Choose photo"
+  },
+  "modeSelector": {
+    "catalogTitle": "Browse the catalog",
+    "catalogText": "Explore the sofa collection and try any one with a single click",
+    "aiTitle": "AI-powered match",
+    "aiText": "Answer 5 questions — we'll suggest sofas that fit your preferences"
+  },
+  "catalog": {
+    "all": "All",
+    "straight": "Straight",
+    "corner": "Corner",
+    "armchair": "Armchairs"
+  },
+  "sofaCard": {
+    "tryOn": "Try on",
+    "generating": "Generating"
+  },
+  "accessories": {
+    "title": "Add accessories",
+    "max": "Up to {{n}} items",
+    "removeOne": "Remove one to add another",
+    "all": "All",
+    "categories": {
+      "pillows": "Pillows & throws",
+      "tables": "Tables & nightstands",
+      "rugs": "Rugs",
+      "lighting": "Lighting"
+    }
+  },
+  "loader": {
+    "titleSofa": "Placing the sofa in your room",
+    "titleAccessories": "Styling the room with accessories",
+    "hint": "This can take up to 30 seconds",
+    "sofaSteps": [
+      "Unpacking the sofa…",
+      "Measuring walls with a tape",
+      "Screwing in the legs",
+      "Adjusting the lighting",
+      "Pulling the curtains for a better shot",
+      "Matching the tone to the wallpaper",
+      "Sweeping up before the photo shoot",
+      "Final touches by the stylist"
+    ],
+    "accessorySteps": [
+      "Draping a throw on the back",
+      "Fluffing the pillows",
+      "Picking a table lamp",
+      "Bringing in a green plant",
+      "Hanging a picture above the sofa",
+      "Lighting candles for warmth",
+      "Arranging books on the shelf",
+      "Final touches by the stylist"
+    ]
+  },
+  "result": {
+    "imgAlt": "Sofa in your room",
+    "openFullscreen": "Open fullscreen",
+    "enhancing": "Improving the interior...",
+    "scoreLabel": "Design score",
+    "pickingAccessories": "Picking accessories...",
+    "enhanceCta": "Style with accessories",
+    "feedbackThanks": "Thanks for the feedback!",
+    "feedbackQuestion": "Like the result?",
+    "feedbackQuestionEnhanced": "Like the result with accessories?",
+    "like": "Like",
+    "dislike": "Not great",
+    "commentDislike": "What's off? (optional)",
+    "commentLike": "Tell us more (optional)",
+    "cancel": "Cancel",
+    "submit": "Send feedback",
+    "submitting": "Sending...",
+    "download": "Download",
+    "addToCart": "Add to cart",
+    "inCart": "In cart",
+    "suggested": "Suggested accessories",
+    "bundleInCart": "Bundle in cart",
+    "addBundle": "Add bundle to cart",
+    "totalInCart": "Cart total",
+    "tryAnother": "Try another sofa"
+  },
+  "quiz": {
+    "title": "AI sofa match",
+    "stepOf": "Step {{current}} of {{total}}",
+    "back": "Back",
+    "cancel": "Cancel",
+    "next": "Next",
+    "skipStep": "Skip this step",
+    "continueWithSize": "Continue with this size",
+    "roomTitle": "Tell us about your room",
+    "roomSubtitle": "Pick the approximate size so we can suggest the right scale",
+    "roomArea": "room area",
+    "usageTitle": "How will you use it?",
+    "usageSubtitle": "You can pick more than one",
+    "styleTitle": "Which style do you prefer?",
+    "colorTitle": "Which colors do you like?",
+    "budgetTitle": "What's your budget?",
+    "usage": {
+      "movies": { "label": "Watching movies", "description": "Comfort for long lounging" },
+      "guests": { "label": "Hosting guests", "description": "Enough seats for the crowd" },
+      "sleeping": { "label": "Sleeping spot", "description": "Works as an extra bed" },
+      "pets-kids": { "label": "Kids & pets", "description": "Durable upholstery" }
+    },
+    "style": {
+      "modern": { "label": "Modern", "description": "Clean lines, restrained" },
+      "scandinavian": { "label": "Scandinavian", "description": "Light, cozy, natural" },
+      "classic": { "label": "Classic", "description": "Warm shapes, traditional" },
+      "minimal": { "label": "Minimal", "description": "Maximum simplicity" }
+    },
+    "color": {
+      "light": { "label": "Light", "description": "Beige, light grey, milky" },
+      "dark": { "label": "Dark", "description": "Graphite, navy, black" },
+      "colorful": { "label": "Bold", "description": "Yellow, blue, green" },
+      "neutral": { "label": "Neutral", "description": "Grey, latte, universal" }
+    },
+    "budget": {
+      "low": { "label": "Under 30,000 ₽", "description": "Budget tier" },
+      "medium": { "label": "30,000 – 50,000 ₽", "description": "Mid tier" },
+      "high": { "label": "From 50,000 ₽", "description": "Premium" }
+    },
+    "wall": {
+      "title": "Where will the sofa stand?",
+      "subtitle": "Mark the wall section where you want the sofa — we'll only show ones that fit.",
+      "tapHint": "Tap the wall to drop two points. Drag them to fine-tune.",
+      "resetPoints": "Reset points",
+      "distance": "Distance between points",
+      "examplecm": "e.g. 220",
+      "examplem": "e.g. 2.2",
+      "unitCm": "cm",
+      "unitM": "m",
+      "apply": "Apply",
+      "applied": "Applied",
+      "errPositive": "Enter a positive number",
+      "errMin": "Minimum 100 cm (1 m)",
+      "errMax": "Maximum 1000 cm (10 m)",
+      "previewLine1": "For a {{wall}} cm wall we'll suggest sofas up to",
+      "previewLine2": "(with 15 cm clearance on each side)."
+    }
+  },
+  "recommendations": {
+    "yourPrefs": "Your preferences",
+    "summary": "{{room}} m² · {{style}} · {{color}} tones · {{budget}}",
+    "restart": "Start over",
+    "wallFilter": "Wall filter: up to",
+    "wallFilterDetail": "(wall {{wall}} cm, {{clearance}} cm clearance)",
+    "remove": "Remove",
+    "tooFewZero": "No sofas fit your wall length. Try a larger wall or show all options without the limit.",
+    "tooFewOne": "Only 1 sofa fits your wall length. Try a larger wall or show all options without the limit.",
+    "showAll": "Show all sofas",
+    "bestForYou": "Best matches for you",
+    "bestPick": "#{{n}} · Top pick",
+    "fitsWall": "Fits the wall",
+    "otherOptions": "Other good options",
+    "tryOn": "Try on",
+    "generating": "Generating",
+    "styles": {
+      "modern": "modern",
+      "scandinavian": "scandinavian",
+      "classic": "classic",
+      "minimal": "minimal"
+    },
+    "colors": {
+      "light": "light",
+      "dark": "dark",
+      "colorful": "bold",
+      "neutral": "neutral"
+    },
+    "budgets": {
+      "low": "under 30,000 ₽",
+      "medium": "30–50,000 ₽",
+      "high": "from 50,000 ₽"
+    },
+    "reasons": {
+      "style": "Matches the {{style}} style",
+      "color": "In your color palette",
+      "budget": "Within your budget",
+      "usage": "Great for: {{list}}",
+      "tooBig": "May be a bit large for the room",
+      "wallFit": "Fits the wall length perfectly"
+    },
+    "usageWords": {
+      "movies": "watching movies",
+      "guests": "hosting guests",
+      "sleeping": "sleeping",
+      "pets-kids": "families with kids and pets"
+    }
+  },
+  "toasts": {
+    "addedToCart": "Added to cart",
+    "sofaAdded": "Sofa added to cart",
+    "bundleAdded": "Bundle added to cart",
+    "bundleAddedDesc": "Items added: {{n}}",
+    "thanksFeedback": "Thanks! Your feedback was saved",
+    "feedbackError": "Couldn't send feedback",
+    "feedbackErrorDesc": "The generation isn't saved yet. Try again in a second.",
+    "tryAgain": "Try again",
+    "genError": "Generation error",
+    "enhanceError": "Enhancement error",
+    "noImage": "Couldn't get the image",
+    "noEnhance": "Couldn't improve the interior",
+    "noAccessories": "Couldn't pick accessories"
+  },
+  "login": {
+    "title": "Admin sign-in",
+    "subtitle": "Enter your credentials",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in",
+    "errorTitle": "Sign-in error",
+    "errorDesc": "Check your email and password",
+    "noUser": "Couldn't fetch user",
+    "noAdmin": "You don't have admin rights"
+  },
+  "notFound": {
+    "title": "404",
+    "text": "Oops! Page not found",
+    "back": "Return to home"
+  },
+  "admin": {
+    "title": "Admin panel",
+    "logout": "Sign out",
+    "generations": "Generations",
+    "empty": "No generations yet",
+    "loadMore": "Load more",
+    "loadError": "Loading error",
+    "cols": {
+      "date": "Date",
+      "sofa": "Sofa",
+      "type": "Type",
+      "cost": "$",
+      "images": "Images",
+      "logs": "Logs",
+      "accessories": "Accessories",
+      "feedback": "Feedback"
+    },
+    "enhanced": "With decor",
+    "base": "Basic",
+    "open": "Open",
+    "logsBtn": "Logs",
+    "logsTitle": "Generation timings",
+    "imagesTitle": "Generation images",
+    "inputPhoto": "Input photo",
+    "result": "Result",
+    "noImagesError": "Couldn't load images",
+    "noLogsError": "Couldn't load logs",
+    "noRequestId": "No request_id (old record)",
+    "showTimings": "Show timings",
+    "noLogsHint": "This generation has no request_id (likely saved before tracking was enabled).",
+    "logsNotFound": "No logs found. Edge functions may not have been redeployed with the new logger yet — try a fresh generation in a minute.",
+    "noData": "No data",
+    "llmCost": "LLM call cost",
+    "unknownModels": "⚠ Unknown models (cost not counted):",
+    "logsCols": {
+      "time": "t, ms",
+      "function": "Function",
+      "event": "Event",
+      "details": "Details"
+    },
+    "feedbackLike": "Like",
+    "feedbackDislike": "Not great"
+  }
+}

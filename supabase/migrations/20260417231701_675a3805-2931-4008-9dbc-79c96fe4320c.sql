@@ -1,0 +1,1 @@
+ALTER TABLE public.generations ADD COLUMN is_enhanced BOOLEAN NOT NULL DEFAULT false;

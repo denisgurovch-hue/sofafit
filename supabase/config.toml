@@ -1,0 +1,22 @@
+project_id = "tfivxdtxvjgxwyiwflsh"
+
+[functions.generate-interior]
+verify_jwt = false
+
+[functions.save-generation]
+verify_jwt = false
+
+[functions.enhance-interior]
+verify_jwt = false
+
+[functions.submit-feedback]
+verify_jwt = false
+
+[functions.pick-accessories]
+verify_jwt = false
+
+[functions.score-interior]
+verify_jwt = false
+
+[functions.analyze-room-angle]
+verify_jwt = false
