@@ -1,14 +1,11 @@
-const assetBaseUrl =
-  "https://tfivxdtxvjgxwyiwflsh.supabase.co/storage/v1/object/public/generation-images";
-
-const harmonySofa = `${assetBaseUrl}/store%2Fharmony-sofa.jpeg`;
-const lindenSectional = `${assetBaseUrl}/store%2Flinden-sectional.jpg`;
-const filsSofa = `${assetBaseUrl}/sofas%2Ffils-mini-latte.jpg`;
-const averyChair = `${assetBaseUrl}/store%2Favery-lounge-chair.jpg`;
-const nolanTable = `${assetBaseUrl}/store%2Fnolan-coffee-table.jpg`;
-const miraTable = `${assetBaseUrl}/store%2Fmira-side-table.jpg`;
-const ellisBed = `${assetBaseUrl}/store%2Fellis-bed-frame.jpg`;
-const rowanLamp = `${assetBaseUrl}/store%2Frowan-floor-lamp.jpg`;
+const harmonySofa = "/store/harmony-sofa.jpeg";
+const lindenSectional = "/store/linden-sectional.webp";
+const filsSofa = "/sofas/fils-mini-latte.jpg";
+const averyChair = "/store/avery-lounge-chair.jpg";
+const nolanTable = "/store/nolan-coffee-table.jpg";
+const miraTable = "/store/mira-side-table.jpg";
+const ellisBed = "/store/ellis-bed-frame.jpg";
+const rowanLamp = "/store/rowan-floor-lamp.jpg";
 
 export type StoreCategory =
   | "Диваны"
