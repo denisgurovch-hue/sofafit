@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ArrowRight,
@@ -19,9 +19,16 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import slipsonSofa from "@/assets/sofas/slipson-light-grey.jpeg";
 import emptyRoom from "@/assets/landing/empty-room.jpg";
 import roomWithSofa from "@/assets/landing/room-with-sofa.png";
+import { useFurnitureWidget } from "@/lib/useFurnitureWidget";
 
 const Landing = () => {
   const { t, i18n } = useTranslation();
+
+  const landingDemoCardIds = useMemo(() => ["fi-card-landing-demo"], []);
+  const demoWidgetStatus = useFurnitureWidget(landingDemoCardIds, {
+    buttonText: "AI примерка",
+    modalTitle: "AI-примерка мебели",
+  });
 
   useEffect(() => {
     document.title = t("landing.meta.title");
@@ -175,35 +182,36 @@ const Landing = () => {
           </div>
         </section>
 
-        {/* Demo block */}
+        {/* Demo block — FurnitureInpaintWidget mounts "AI примерка" into .widget-mount */}
         <section className="bg-muted/40 py-16 md:py-24 border-y">
           <div className="container">
             <Card className="overflow-hidden">
-              <div className="grid md:grid-cols-2">
-                <div className="aspect-[4/3] md:aspect-auto bg-muted">
+              <article
+                id="fi-card-landing-demo"
+                className="grid md:grid-cols-2"
+              >
+                <div className="product-main-image aspect-[4/3] md:aspect-auto bg-muted overflow-hidden">
                   <img
                     src={slipsonSofa}
                     alt={t("landing.demo.alt")}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="p-8 md:p-12 flex flex-col justify-center space-y-5">
+                <div className="product-body p-8 md:p-12 flex flex-col justify-center space-y-5">
                   <h2 className="text-3xl md:text-4xl font-bold text-foreground">
                     {t("landing.demo.title")}
                   </h2>
                   <p className="text-muted-foreground text-lg leading-relaxed">
                     {t("landing.demo.text")}
                   </p>
-                  <div>
-                    <Button asChild size="lg">
-                      <Link to="/store">
-                        {t("landing.demo.cta")}
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
+                  {demoWidgetStatus === "error" && (
+                    <p className="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">
+                      Не удалось загрузить виджет AI-примерки с demo.sofafit.ru.
+                    </p>
+                  )}
+                  <div className="widget-mount pt-1" />
                 </div>
-              </div>
+              </article>
             </Card>
           </div>
         </section>

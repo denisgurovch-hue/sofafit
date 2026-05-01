@@ -49,12 +49,20 @@ const loadScriptOnce = (): Promise<void> => {
   });
 };
 
+export type FurnitureWidgetOptions = {
+  buttonText?: string;
+  modalTitle?: string;
+};
+
 /**
  * Loads the FurnitureInpaintWidget snippet from 193.187.95.17 and initializes
  * it once per card id. The snippet's init() uses document.querySelector for
  * its selectors, so each card needs its own scoped selectors via #cardId.
  */
-export function useFurnitureWidget(cardIds: string[]) {
+export function useFurnitureWidget(
+  cardIds: string[],
+  options?: FurnitureWidgetOptions
+) {
   const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">(
     "idle"
   );
@@ -107,8 +115,8 @@ export function useFurnitureWidget(cardIds: string[]) {
             mountSelector: `#${id} .widget-mount`,
             productImageSelector: `#${id} .product-main-image img`,
             productTitleSelector: `#${id} .product-body h2`,
-            buttonText: "AI-примерка",
-            modalTitle: "AI-примерка мебели",
+            buttonText: options?.buttonText ?? "AI-примерка",
+            modalTitle: options?.modalTitle ?? "AI-примерка мебели",
           });
 
           // The snippet creates a position:fixed modal inside .widget-mount.
@@ -138,7 +146,7 @@ export function useFurnitureWidget(cardIds: string[]) {
       });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cardIds.join("|")]);
+  }, [cardIds.join("|"), options?.buttonText, options?.modalTitle]);
 
   return status;
 }
