@@ -55,12 +55,9 @@ const Landing = () => {
           </div>
           <div className="flex items-center gap-3">
             <LanguageSwitcher />
-            <Button asChild size="sm" variant="ghost" className="px-2 sm:px-3">
-              <Link to="/store">Demo</Link>
-            </Button>
             <Button asChild size="sm">
               <Link to="/store">
-                {t("header.tryIt")}
+                Перейти в демо-магазин
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
