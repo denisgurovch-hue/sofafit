@@ -95,13 +95,13 @@ const Landing = () => {
             </div>
 
             {/* Before / After collage */}
-            <div className="relative">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-2">
+            <div className="relative max-w-xl w-full mx-auto">
+              <div className="space-y-4 md:space-y-5">
+                <div className="space-y-2 md:-translate-x-4">
                   <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                     {t("landing.hero.before")}
                   </div>
-                  <div className="aspect-[4/5] rounded-xl border bg-muted overflow-hidden">
+                  <div className="aspect-[16/10] rounded-xl border bg-muted overflow-hidden">
                     <img
                       src={emptyRoom}
                       alt={t("landing.hero.beforeAlt")}
@@ -109,11 +109,11 @@ const Landing = () => {
                     />
                   </div>
                 </div>
-                <div className="space-y-2 mt-8">
+                <div className="space-y-2 md:translate-x-6">
                   <div className="text-xs font-medium text-primary uppercase tracking-wide">
                     {t("landing.hero.after")}
                   </div>
-                  <div className="aspect-[4/5] rounded-xl border-2 border-primary/30 shadow-lg overflow-hidden bg-background">
+                  <div className="aspect-[16/10] rounded-xl border-2 border-primary/30 shadow-lg overflow-hidden bg-background">
                     <img
                       src={roomWithSofa}
                       alt={t("landing.hero.afterAlt")}
