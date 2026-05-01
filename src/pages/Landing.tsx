@@ -95,7 +95,7 @@ const Landing = () => {
             </div>
 
             {/* Before / After collage */}
-            <div className="relative max-w-xl w-full mx-auto">
+            <div className="relative max-w-xl w-[70%] mx-auto">
               <div className="space-y-4 md:space-y-5">
                 <div className="space-y-2 md:-translate-x-4">
                   <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
