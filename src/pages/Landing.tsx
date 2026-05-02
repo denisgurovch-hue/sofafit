@@ -19,6 +19,7 @@ import slipsonSofa from "@/assets/sofas/slipson-light-grey.jpeg";
 import emptyRoom from "@/assets/landing/empty-room.jpg";
 import roomWithSofa from "@/assets/landing/room-with-sofa.png";
 import { useFurnitureWidget } from "@/lib/useFurnitureWidget";
+import { getSiteBaseUrl, setCanonical, setOg, setRobots, setTwitterMeta } from "@/lib/seo";
 
 const Landing = () => {
   const { t, i18n } = useTranslation();
@@ -30,9 +31,21 @@ const Landing = () => {
   });
 
   useEffect(() => {
-    document.title = t("landing.meta.title");
+    const title = t("landing.meta.title");
+    const description = t("landing.meta.description");
+    document.title = title;
     const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute("content", t("landing.meta.description"));
+    if (meta) meta.setAttribute("content", description);
+
+    const base = getSiteBaseUrl();
+    const url = `${base}/`;
+    setCanonical(url);
+    setOg("og:url", url);
+    setOg("og:title", title);
+    setOg("og:description", description);
+    setTwitterMeta("twitter:title", title);
+    setTwitterMeta("twitter:description", description);
+    setRobots(null);
   }, [t, i18n.language]);
 
   const howSteps = [
