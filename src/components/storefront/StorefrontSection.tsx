@@ -1,22 +1,45 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import StoreTopBar from "./StoreTopBar";
 import StoreHero from "./StoreHero";
 import ProductCard from "./ProductCard";
-import { storeProducts, storeCategories, categorySlug } from "./products";
+import { storeProducts, type StoreCategoryFilter } from "./products";
 import { useFurnitureWidget } from "@/lib/useFurnitureWidget";
 
 const StorefrontSection = () => {
+  const [categoryFilter, setCategoryFilter] = useState<StoreCategoryFilter>("all");
+
+  const filteredProducts = useMemo(
+    () =>
+      categoryFilter === "all"
+        ? storeProducts
+        : storeProducts.filter((p) => p.category === categoryFilter),
+    [categoryFilter]
+  );
+
   const cardIds = useMemo(
-    () => storeProducts.map((p) => `fi-card-${p.id}`),
-    []
+    () => filteredProducts.map((p) => `fi-card-${p.id}`),
+    [filteredProducts]
   );
   const status = useFurnitureWidget(cardIds);
 
+  const scrollToCollection = () => {
+    document.getElementById("collection")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleBrowseSofas = () => {
+    setCategoryFilter("Диваны");
+    scrollToCollection();
+  };
+
+  const handleShowAll = () => {
+    setCategoryFilter("all");
+    scrollToCollection();
+  };
 
   return (
     <div className="bg-store-bg text-store-ink min-h-screen">
-      <StoreTopBar />
-      <StoreHero />
+      <StoreTopBar activeFilter={categoryFilter} onFilterChange={setCategoryFilter} />
+      <StoreHero onBrowseSofas={handleBrowseSofas} />
 
       {status === "error" && (
         <div className="bg-amber-50 border-y border-amber-200 text-amber-900 text-sm">
@@ -30,29 +53,26 @@ const StorefrontSection = () => {
         <div className="flex items-end justify-between mb-8 md:mb-10 gap-4">
           <div>
             <h2 className="font-serif text-2xl md:text-3xl text-store-ink">
-              Избранные предметы
+              {categoryFilter === "all" ? "Избранные предметы" : categoryFilter}
             </h2>
             <p className="mt-1.5 text-sm text-store-ink-muted">
-              Восемь современных must-have, отобранных нашей дизайн-студией.
+              {categoryFilter === "all"
+                ? "Современные must-have, отобранные нашей дизайн-студией."
+                : `Категория «${categoryFilter}» в нашей демо-коллекции.`}
             </p>
           </div>
-          <a
-            href="#all"
+          <button
+            type="button"
+            onClick={handleShowAll}
             className="hidden md:inline text-sm text-store-ink underline underline-offset-4 hover:opacity-70"
           >
             Смотреть все
-          </a>
+          </button>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-6 lg:gap-8">
-          {storeProducts.map((p) => (
+          {filteredProducts.map((p) => (
             <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
-
-        <div aria-hidden className="sr-only">
-          {storeCategories.map((c) => (
-            <span key={c} id={`cat-${categorySlug[c]}`} />
           ))}
         </div>
       </main>

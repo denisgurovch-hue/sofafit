@@ -1,5 +1,19 @@
 import { Heart } from "lucide-react";
+import { cn } from "@/lib/utils";
 import type { StoreProduct } from "./products";
+
+/** object-contain + scale (как у Harmony) — диван целиком в кадре карточки */
+const SCALED_CONTAIN_IMAGE_IDS = new Set([
+  "harmony-sofa",
+  "linden-sectional",
+  "sloane-accent-sofa",
+  "numo-mini-sofa",
+  "ines-velur-sofa",
+  "bons-graphite-sofa",
+  "onte-line-sectional",
+  "modula-beige-sofa",
+  "onte-soft-sectional",
+]);
 
 interface ProductCardProps {
   product: StoreProduct;
@@ -16,6 +30,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   // Unique id per card so the snippet can be initialized once per card with
   // its own mountSelector / productImageSelector / productTitleSelector.
   const cardId = `fi-card-${product.id}`;
+  const useScaledContainImage = SCALED_CONTAIN_IMAGE_IDS.has(product.id);
 
   return (
     <article
@@ -28,7 +43,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
           src={product.image}
           alt={product.name}
           loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[0.7]"
+          className={cn(
+            "absolute inset-0 m-auto max-h-full max-w-full transition-transform duration-700",
+            useScaledContainImage
+              ? "object-contain scale-[1.008] origin-center group-hover:scale-[0.706]"
+              : "h-full w-full object-cover group-hover:scale-[0.7]"
+          )}
         />
         <span className="absolute top-3 left-3 inline-flex items-center px-2.5 py-1 rounded-full bg-store-surface/95 text-[10px] uppercase tracking-[0.15em] text-store-ink shadow-sm">
           {product.badge}

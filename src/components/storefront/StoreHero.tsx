@@ -1,4 +1,8 @@
-const StoreHero = () => {
+interface StoreHeroProps {
+  onBrowseSofas?: () => void;
+}
+
+const StoreHero = ({ onBrowseSofas }: StoreHeroProps) => {
   return (
     <section id="top" className="bg-store-bg border-b border-store-border">
       <div className="container py-14 md:py-20 max-w-3xl">
@@ -22,12 +26,13 @@ const StoreHero = () => {
           >
             Смотреть коллекцию
           </a>
-          <a
-            href="#cat-sofas"
+          <button
+            type="button"
+            onClick={onBrowseSofas}
             className="inline-flex h-11 items-center px-6 rounded-full border border-store-border text-store-ink text-sm tracking-wide hover:bg-store-accent transition-colors"
           >
             Купить диван
-          </a>
+          </button>
         </div>
       </div>
     </section>

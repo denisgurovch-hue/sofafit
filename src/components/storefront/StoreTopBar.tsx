@@ -1,7 +1,31 @@
 import { Search, Heart, User, ShoppingBag } from "lucide-react";
-import { storeCategories, categorySlug } from "./products";
+import {
+  storeCategories,
+  type StoreCategory,
+  type StoreCategoryFilter,
+} from "./products";
 
-const StoreTopBar = () => {
+interface StoreTopBarProps {
+  activeFilter: StoreCategoryFilter;
+  onFilterChange: (filter: StoreCategoryFilter) => void;
+}
+
+const StoreTopBar = ({ activeFilter, onFilterChange }: StoreTopBarProps) => {
+  const scrollToCollection = () => {
+    document.getElementById("collection")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const pick = (filter: StoreCategoryFilter) => {
+    onFilterChange(filter);
+    scrollToCollection();
+  };
+
+  const linkClass = (active: boolean) =>
+    [
+      "text-[13px] tracking-wide transition-colors whitespace-nowrap",
+      active ? "text-store-ink font-semibold" : "text-store-ink/80 hover:text-store-ink",
+    ].join(" ");
+
   return (
     <header className="sticky top-0 z-40 bg-store-surface/95 backdrop-blur border-b border-store-border">
       <div className="container">
@@ -58,16 +82,27 @@ const StoreTopBar = () => {
           </nav>
         </div>
 
-        {/* Categories row */}
-        <nav className="hidden md:flex h-11 items-center justify-center gap-8 border-t border-store-border/70">
-          {storeCategories.map((c) => (
-            <a
+        {/* Categories row — filters catalog */}
+        <nav
+          className="flex h-11 items-center justify-start md:justify-center gap-6 md:gap-8 border-t border-store-border/70 overflow-x-auto py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          aria-label="Категории каталога"
+        >
+          <button
+            type="button"
+            onClick={() => pick("all")}
+            className={linkClass(activeFilter === "all")}
+          >
+            Все
+          </button>
+          {storeCategories.map((c: StoreCategory) => (
+            <button
               key={c}
-              href={`#cat-${categorySlug[c]}`}
-              className="text-[13px] tracking-wide text-store-ink/80 hover:text-store-ink transition-colors"
+              type="button"
+              onClick={() => pick(c)}
+              className={linkClass(activeFilter === c)}
             >
               {c}
-            </a>
+            </button>
           ))}
         </nav>
       </div>
