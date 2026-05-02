@@ -149,3 +149,50 @@ Expected result: HTTP 200/301 and a valid TLS certificate.
 systemctl status certbot.timer
 certbot renew --dry-run
 ```
+
+## Embed UI (`sofafit-room-designer` → `furniture-inpaint-api`)
+
+The AI fitting **iframe** (`/static/embed/…` on `demo.sofafit.ru`) is **not** built from this `sofafit` repo. It comes from a separate frontend-only project:
+
+| Item | Value |
+|------|--------|
+| GitHub | `https://github.com/denisgurovch-hue/sofafit-room-designer` |
+| Role | Production build of the embed app only (widget UI inside the iframe) |
+| Target on server | `~/furniture-inpaint-api/furniture-inpaint-api/app/static/embed/` (i.e. `/root/furniture-inpaint-api/furniture-inpaint-api/app/static/embed/`) |
+
+The **product-card snippet** on partner sites loads that embed URL from `demo.sofafit.ru`; Nginx in the `furniture-inpaint-api` stack serves files from `app/static/embed/`.
+
+### Pipeline (current)
+
+1. Change and push embed front in **`sofafit-room-designer`** (`main` on GitHub).
+2. On the server, **update the local clone** of `sofafit-room-designer` (same as you do for other repos — `git pull`).
+3. Build and copy **`dist/`** into `furniture-inpaint-api`:
+
+```bash
+ssh root@193.187.95.17
+cd ~/furniture-inpaint-api/furniture-inpaint-api   # or path where sofafit-room-designer lives
+
+# If embed is a sibling clone, e.g. ~/sofafit-room-designer:
+cd ~/sofafit-room-designer   # adjust to your actual clone path
+git pull
+npm install   # or npm ci when lockfile is in sync
+npm run build
+
+# Sync built assets into the API static folder (overwrite old embed)
+rm -rf ~/furniture-inpaint-api/furniture-inpaint-api/app/static/embed/*
+cp -r dist/* ~/furniture-inpaint-api/furniture-inpaint-api/app/static/embed/
+```
+
+Static files are usually bind-mounted into the Nginx container; if something looks cached, restart the stack’s `nginx` container once.
+
+### Pipeline (legacy)
+
+Previously the flow was: edit front on **Lovable** → pull/export to the server → then **copy `embed`** into `furniture-inpaint-api` as above.  
+**Now** treat **`sofafit-room-designer` on GitHub + server `git pull`** as the source of truth for embed changes; keep the **copy into `app/static/embed/`** step — it is still required after every embed build.
+
+### Checklist when releasing embed changes
+
+- [ ] `sofafit-room-designer`: commit / push to `main`
+- [ ] Server: `git pull` in the server clone of `sofafit-room-designer`
+- [ ] `npm run build` → `cp -r dist/*` → `.../app/static/embed/`
+- [ ] Smoke-test: open the widget from `mini.sofafit.ru` / store and confirm the iframe loads `demo.sofafit.ru/static/embed/…`
