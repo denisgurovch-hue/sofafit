@@ -8,4 +8,7 @@ Production repository for the trimmed SofaFit version:
 
 ## Deployment
 
-See `DEPLOY.md` for full server and Docker deployment instructions.
+See **`DEPLOY.md`** for:
+
+- Docker deploy of this site (`/opt/sofafit`), HTTPS / reverse proxy
+- **Embed widget** ([`sofafit-room-designer`](https://github.com/denisgurovch-hue/sofafit-room-designer)): build, copy into `furniture-inpaint-api`, Git workflow (Lovable + Cursor), production SSH deploy key on the server

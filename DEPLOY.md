@@ -169,7 +169,7 @@ The **product-card snippet** on partner sites loads that embed URL from `demo.so
 | **GitHub `main`** (`sofafit-room-designer`) | Canonical source code — always align Mac, server clone, and Lovable to this branch. |
 | **Lovable** | Editor — must **push to the same repo** (`main` or PR merged into `main`). |
 | **Mac (Cursor)** | Local dev — commit/push to `main` (or PR). **Run `git pull origin main` before starting work** if you or Lovable changed the repo elsewhere. |
-| **Server `~/sofafit-room-designer`** | Clone used for `git pull` + build (requires GitHub auth: SSH deploy key or HTTPS token). |
+| **Server `/root/sofafit-room-designer`** | Production clone for `git pull` + build. **SSH deploy key is configured** on `193.187.95.17` (`~/.ssh/sofafit_room_designer_deploy`, Git remote uses host alias `github.com-sofafit-room-designer`). |
 | **`.../app/static/embed/`** | **Build output only** (`npm run build` → `dist/`). Do not treat this folder as the place to edit source. |
 
 ### Aligning all copies (after drift)
@@ -178,7 +178,7 @@ When embed files on the server are already correct but git clones diverged:
 
 1. Ensure **GitHub `main`** contains every commit you want (including merges from Lovable).
 2. **Mac:** `git fetch origin && git checkout main && git reset --hard origin/main` (or `git pull --rebase` if you prefer not to hard reset).
-3. **Server clone:** same after fixing Git access — `git fetch && git checkout main && git reset --hard origin/main`.
+3. **Server clone:** `ssh root@193.187.95.17` → `cd ~/sofafit-room-designer` → `git fetch && git checkout main && git reset --hard origin/main`.
 4. **Lovable:** open project and **sync / pull from GitHub** so the editor matches `main`.
 
 Rebuild embed from that commit and copy `dist/` to `app/static/embed/` if you need to prove parity.
@@ -192,14 +192,16 @@ Rebuild embed from that commit and copy `dist/` to `app/static/embed/` if you ne
 1. `git pull origin main` (pick up Lovable or other pushes).
 2. Edit, `npm run build`, test locally.
 3. `git push origin main`.
-4. Deploy (server path below or fallback).
+4. Deploy using **Production embed deploy** below (preferred — server has deploy key).
 
 **Path B — edits in Lovable**
 
 1. Finish in Lovable with **push to GitHub** (`main` or merge PR to `main`).
 2. Before next Cursor session: **`git pull origin main`** on Mac.
 
-**Deploy embed (server has Git access)**
+**Production embed deploy (default)**
+
+Run on **`193.187.95.17`** after `main` contains your commits. Requires **read-only deploy key** on GitHub for `sofafit-room-designer` (already on production).
 
 ```bash
 ssh root@193.187.95.17
@@ -215,15 +217,27 @@ cd ~/furniture-inpaint-api/furniture-inpaint-api && docker compose restart nginx
 
 If Cloudflare (or another CDN) caches `/static/embed/`, purge cache or hard-refresh when verifying.
 
+### SSH deploy key (production server)
+
+Already configured on **`193.187.95.17`**:
+
+- Private key: `/root/.ssh/sofafit_room_designer_deploy`
+- SSH config: `Host github.com-sofafit-room-designer` → `IdentityFile` above
+- Remote URL in `/root/sofafit-room-designer`: `git@github.com-sofafit-room-designer:denisgurovch-hue/sofafit-room-designer.git`
+
+To add the **same setup on another machine**, generate a **new** key pair, add its public key as a **second Deploy key** in the repo (one key per host), and mirror the `Host` / `IdentityFile` block in `~/.ssh/config`.
+
+Full step-by-step for a **new server** is in team notes / history: generate `ssh-keygen`, GitHub → Repository → **Settings** → **Deploy keys** → paste `.pub`, read-only.
+
 **Avoid**
 
 - Editing only on the server without pushing — changes are lost on the next `git reset`.
 - Editing source inside `app/static/embed/` — overwrite on next deploy.
 - Parallel edits in Lovable and Cursor **without** pulling between sessions.
 
-### Fallback: server cannot `git pull` (HTTPS auth)
+### Fallback: deploy embed from Mac only
 
-Build on Mac from current `main`, stream `dist/` to the server:
+Use when you **cannot** run `git pull` on the server (new host without deploy key yet, or GitHub outage). Builds `dist` locally and streams files into `app/static/embed/`.
 
 ```bash
 cd /path/to/sofafit-room-designer
@@ -232,7 +246,7 @@ git pull origin main && npm run build && cd dist && tar czf - . | ssh root@193.1
 ssh root@193.187.95.17 'find /root/furniture-inpaint-api/furniture-inpaint-api/app/static/embed -name "._*" -delete; cd /root/furniture-inpaint-api/furniture-inpaint-api && docker compose restart nginx'
 ```
 
-Fix long-term by adding a **read-only deploy key** (SSH) for `sofafit-room-designer` on the server.
+Remove stray macOS `._*` files after `tar` if needed (`find … -delete` above).
 
 ### Pipeline (legacy)
 
@@ -249,5 +263,5 @@ Previously: edit on **Lovable** → pull to server → copy **embed** into `furn
 - [ ] **GitHub:** latest commit on `main` is what you intend to ship
 - [ ] **Mac:** `git pull origin main` before editing; push after Cursor changes
 - [ ] **Lovable:** changes pushed / merged to `main` before relying on Mac-only state
-- [ ] **Server:** `git pull` → `npm run build` → `cp -r dist/*` → `.../app/static/embed/` → `docker compose restart nginx` (or fallback `tar | ssh` from Mac)
+- [ ] **Server:** `git pull` → `npm run build` → `cp -r dist/*` → `.../app/static/embed/` → `docker compose restart nginx` (fallback: **Fallback: deploy embed from Mac only** if server Git unavailable)
 - [ ] **Smoke-test:** widget from `mini.sofafit.ru` / store; iframe URL under `demo.sofafit.ru/static/embed/…`
