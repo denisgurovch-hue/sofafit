@@ -27,13 +27,13 @@
     },
     "how": {
       "title": "How it works",
-      "subtitle": "Three steps from an empty room photo to a finished order",
-      "step1Title": "1. Upload a room photo",
-      "step1Text": "The buyer sends a snapshot of their room straight into the widget on your site.",
-      "step2Title": "2. AI drops in the sofa",
-      "step2Text": "The model places the chosen item from your catalog with correct scale and shadows.",
-      "step3Title": "3. Add-ons and styling",
-      "step3Text": "AI suggests a rug, lamp and decor — the customer adds them all in one click."
+      "subtitle": "Three steps: the widget on your site, a room photo, and the AI try-on",
+      "step1Title": "1. Add the widget",
+      "step1Text": "We do the heavy lifting — you only add the service call to your site.",
+      "step2Title": "2. Upload a room photo",
+      "step2Text": "The buyer sends a snapshot of their room straight into the widget on your site.",
+      "step3Title": "3. AI drops in the product",
+      "step3Text": "The model places the chosen item from your catalog with correct scale and shadows."
     },
     "benefits": {
       "title": "What the store gets",

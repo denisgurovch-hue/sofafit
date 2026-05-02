@@ -5,7 +5,6 @@ import {
   ArrowRight,
   Upload,
   Sparkles,
-  ShoppingBag,
   Send,
   Mail,
   TrendingUp,
@@ -37,9 +36,9 @@ const Landing = () => {
   }, [t, i18n.language]);
 
   const howSteps = [
-    { icon: Upload, title: t("landing.how.step1Title"), text: t("landing.how.step1Text") },
-    { icon: Sparkles, title: t("landing.how.step2Title"), text: t("landing.how.step2Text") },
-    { icon: ShoppingBag, title: t("landing.how.step3Title"), text: t("landing.how.step3Text") },
+    { icon: Plug, title: t("landing.how.step1Title"), text: t("landing.how.step1Text") },
+    { icon: Upload, title: t("landing.how.step2Title"), text: t("landing.how.step2Text") },
+    { icon: Sparkles, title: t("landing.how.step3Title"), text: t("landing.how.step3Text") },
   ];
 
   const benefits = [
