@@ -30,6 +30,28 @@ git pull
 docker build -t sofafit:latest .
 docker rm -f sofafit || true
 docker run -d --name sofafit --restart unless-stopped -p 8080:80 sofafit:latest
+# mini.sofafit.ru: see “Domain mini.sofafit.ru” below — re-attach the app to the front Nginx network
+docker network connect furniture-inpaint-api_default sofafit 2>/dev/null || true
+```
+
+## Domain mini.sofafit.ru (furniture-inpaint-api front Nginx)
+
+The **`furniture-inpaint-api`** stack owns ports **80** and **443**. Its `nginx.conf` proxies **`mini.sofafit.ru`** to **`http://sofafit:80`**. That only works if the **`sofafit`** container is attached to Docker network **`furniture-inpaint-api_default`** (so the hostname `sofafit` resolves inside the front Nginx container).
+
+If **`sofafit`** was recreated without this attachment, Nginx fails at startup with **`host not found in upstream "sofafit"`**, the front **`furniture-inpaint-api-nginx-1`** container **crash-loops**, and **HTTPS appears dead** (`connection refused` from outside).
+
+After each **`docker run`** / **`docker rm` + `docker run`** of **`sofafit`**:
+
+```bash
+docker network connect furniture-inpaint-api_default sofafit
+docker restart furniture-inpaint-api-nginx-1   # only if nginx was already failing / restarting
+```
+
+Smoke-test on the server:
+
+```bash
+curl -sI -H "Host: mini.sofafit.ru" http://127.0.0.1/
+curl -skI -H "Host: mini.sofafit.ru" https://127.0.0.1/
 ```
 
 ## Health Checks
@@ -56,6 +78,7 @@ git checkout v1.0.0
 docker build -t sofafit:latest .
 docker rm -f sofafit || true
 docker run -d --name sofafit --restart unless-stopped -p 8080:80 sofafit:latest
+docker network connect furniture-inpaint-api_default sofafit 2>/dev/null || true
 ```
 
 To return back to `main` after rollback test:
