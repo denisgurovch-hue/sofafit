@@ -9,7 +9,7 @@ This project is deployed as a Docker container on `193.187.95.17`.
 - Host port: `8080`
 - Container port: `80`
 - Direct URL (without proxy): `http://193.187.95.17:8080`
-- **HTTPS (reverse proxy)** lives in **`furniture-inpaint-api`** Nginx (`/root/furniture-inpaint-api/furniture-inpaint-api/nginx.conf`). Public sites:
+- **HTTPS (reverse proxy)** lives in **`furniture-inpaint-api`** Nginx (`/root/furniture-inpaint-api/furniture-inpaint-api/nginx.conf`). A **backup copy** of that file (sync after server edits) is in this repo: **`deploy/nginx/furniture-inpaint-api-default.conf`**. Public sites:
   - **https://sofafit.ru** (and `www.sofafit.ru`) → proxy to `sofafit:80`, Let’s Encrypt cert `live/sofafit.ru`
   - **https://mini.sofafit.ru** → same backend, cert `live/mini.sofafit.ru`
   - **https://demo.sofafit.ru** → API (`api:8000`), cert `live/demo.sofafit.ru`
