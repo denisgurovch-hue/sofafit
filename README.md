@@ -6,6 +6,10 @@ Production repository for the trimmed SofaFit version:
 - `/store` storefront page
 - `*` 404 page
 
+## Widget (AI-примерка на карточке товара)
+
+Как подключить сниппет, какие селекторы и параметры `init`, живые примеры — см. **`docs/widget-integration.md`**.
+
 ## Deployment
 
 See **`DEPLOY.md`** for:
