@@ -162,37 +162,92 @@ The AI fitting **iframe** (`/static/embed/…` on `demo.sofafit.ru`) is **not** 
 
 The **product-card snippet** on partner sites loads that embed URL from `demo.sofafit.ru`; Nginx in the `furniture-inpaint-api` stack serves files from `app/static/embed/`.
 
-### Pipeline (current)
+### Single source of truth
 
-1. Change and push embed front in **`sofafit-room-designer`** (`main` on GitHub).
-2. On the server, **update the local clone** of `sofafit-room-designer` (same as you do for other repos — `git pull`).
-3. Build and copy **`dist/`** into `furniture-inpaint-api`:
+| Layer | Role |
+|-------|------|
+| **GitHub `main`** (`sofafit-room-designer`) | Canonical source code — always align Mac, server clone, and Lovable to this branch. |
+| **Lovable** | Editor — must **push to the same repo** (`main` or PR merged into `main`). |
+| **Mac (Cursor)** | Local dev — commit/push to `main` (or PR). **Run `git pull origin main` before starting work** if you or Lovable changed the repo elsewhere. |
+| **Server `~/sofafit-room-designer`** | Clone used for `git pull` + build (requires GitHub auth: SSH deploy key or HTTPS token). |
+| **`.../app/static/embed/`** | **Build output only** (`npm run build` → `dist/`). Do not treat this folder as the place to edit source. |
+
+### Aligning all copies (after drift)
+
+When embed files on the server are already correct but git clones diverged:
+
+1. Ensure **GitHub `main`** contains every commit you want (including merges from Lovable).
+2. **Mac:** `git fetch origin && git checkout main && git reset --hard origin/main` (or `git pull --rebase` if you prefer not to hard reset).
+3. **Server clone:** same after fixing Git access — `git fetch && git checkout main && git reset --hard origin/main`.
+4. **Lovable:** open project and **sync / pull from GitHub** so the editor matches `main`.
+
+Rebuild embed from that commit and copy `dist/` to `app/static/embed/` if you need to prove parity.
+
+### Recommended workflow: Lovable + Cursor + deploy
+
+**Rule:** embed source changes always land in **GitHub `main` first**, then build, then copy into `furniture-inpaint-api`.
+
+**Path A — edits in Cursor (Mac)**
+
+1. `git pull origin main` (pick up Lovable or other pushes).
+2. Edit, `npm run build`, test locally.
+3. `git push origin main`.
+4. Deploy (server path below or fallback).
+
+**Path B — edits in Lovable**
+
+1. Finish in Lovable with **push to GitHub** (`main` or merge PR to `main`).
+2. Before next Cursor session: **`git pull origin main`** on Mac.
+
+**Deploy embed (server has Git access)**
 
 ```bash
 ssh root@193.187.95.17
-cd ~/furniture-inpaint-api/furniture-inpaint-api   # or path where sofafit-room-designer lives
-
-# If embed is a sibling clone, e.g. ~/sofafit-room-designer:
-cd ~/sofafit-room-designer   # adjust to your actual clone path
-git pull
-npm install   # or npm ci when lockfile is in sync
+cd ~/sofafit-room-designer
+git pull origin main
+npm install    # or npm ci when lockfile matches
 npm run build
-
-# Sync built assets into the API static folder (overwrite old embed)
-rm -rf ~/furniture-inpaint-api/furniture-inpaint-api/app/static/embed/*
-cp -r dist/* ~/furniture-inpaint-api/furniture-inpaint-api/app/static/embed/
+EMBED=~/furniture-inpaint-api/furniture-inpaint-api/app/static/embed
+rm -rf "${EMBED:?}/"*
+cp -r dist/* "$EMBED/"
+cd ~/furniture-inpaint-api/furniture-inpaint-api && docker compose restart nginx
 ```
 
-Static files are usually bind-mounted into the Nginx container; if something looks cached, restart the stack’s `nginx` container once.
+If Cloudflare (or another CDN) caches `/static/embed/`, purge cache or hard-refresh when verifying.
+
+**Avoid**
+
+- Editing only on the server without pushing — changes are lost on the next `git reset`.
+- Editing source inside `app/static/embed/` — overwrite on next deploy.
+- Parallel edits in Lovable and Cursor **without** pulling between sessions.
+
+### Fallback: server cannot `git pull` (HTTPS auth)
+
+Build on Mac from current `main`, stream `dist/` to the server:
+
+```bash
+cd /path/to/sofafit-room-designer
+git pull origin main && npm run build && cd dist && tar czf - . | ssh root@193.187.95.17 \
+  'EMBED=/root/furniture-inpaint-api/furniture-inpaint-api/app/static/embed; rm -rf ${EMBED:?}/*; tar xzf - -C "$EMBED"'
+ssh root@193.187.95.17 'find /root/furniture-inpaint-api/furniture-inpaint-api/app/static/embed -name "._*" -delete; cd /root/furniture-inpaint-api/furniture-inpaint-api && docker compose restart nginx'
+```
+
+Fix long-term by adding a **read-only deploy key** (SSH) for `sofafit-room-designer` on the server.
 
 ### Pipeline (legacy)
 
-Previously the flow was: edit front on **Lovable** → pull/export to the server → then **copy `embed`** into `furniture-inpaint-api` as above.  
-**Now** treat **`sofafit-room-designer` on GitHub + server `git pull`** as the source of truth for embed changes; keep the **copy into `app/static/embed/`** step — it is still required after every embed build.
+Previously: edit on **Lovable** → pull to server → copy **embed** into `furniture-inpaint-api`.  
+**Now:** GitHub **`main`** is the contract; Lovable and Cursor are two ways to update it; the **copy into `app/static/embed/`** step stays mandatory after each production build.
+
+### Optional improvements
+
+- **GitHub Actions** on push to `main`: build embed, deploy `dist` over SSH to `app/static/embed/`, restart `nginx` (store SSH key / host in repo secrets).
+- **Pre-commit on Mac:** run `npm run build` before push to catch broken embed builds early.
 
 ### Checklist when releasing embed changes
 
-- [ ] `sofafit-room-designer`: commit / push to `main`
-- [ ] Server: `git pull` in the server clone of `sofafit-room-designer`
-- [ ] `npm run build` → `cp -r dist/*` → `.../app/static/embed/`
-- [ ] Smoke-test: open the widget from `mini.sofafit.ru` / store and confirm the iframe loads `demo.sofafit.ru/static/embed/…`
+- [ ] **GitHub:** latest commit on `main` is what you intend to ship
+- [ ] **Mac:** `git pull origin main` before editing; push after Cursor changes
+- [ ] **Lovable:** changes pushed / merged to `main` before relying on Mac-only state
+- [ ] **Server:** `git pull` → `npm run build` → `cp -r dist/*` → `.../app/static/embed/` → `docker compose restart nginx` (or fallback `tar | ssh` from Mac)
+- [ ] **Smoke-test:** widget from `mini.sofafit.ru` / store; iframe URL under `demo.sofafit.ru/static/embed/…`
